@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5-Star Event Management Master Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-indigo-800 mb-2">5-Star Event Management Master Checklist</h1>
+            <p class="text-lg text-gray-600">Ensure flawless execution of formal events in line with international hospitality standards</p>
+            
+            <!-- Progress Overview -->
+            <div class="mt-6 bg-white rounded-lg shadow p-4 mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-semibold text-gray-700">Overall Progress</h3>
+                    <span id="progress-percentage" class="font-bold text-indigo-600">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progress-bar" class="progress-bar bg-indigo-600 rounded-full" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm text-gray-500">
+                    <span id="completed-count">0 completed</span>
+                    <span id="total-count">0 total items</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search and Filter -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+            <div class="relative flex-grow">
+                <input type="text" id="search-input" placeholder="Search checklist items..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            </div>
+            <select id="status-filter" class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="all">All Items</option>
+                <option value="completed">Completed Only</option>
+                <option value="pending">Pending Only</option>
+            </select>
+            <button id="export-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2">
+                <i class="fas fa-file-export"></i> Export
+            </button>
+        </div>
+
+        <!-- Checklist Sections -->
+        <div id="checklist-sections" class="space-y-8">
+            <!-- Sections will be dynamically generated -->
+        </div>
+
+        <!-- Task Management Form -->
+        <div class="mt-8 bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4 text-indigo-700">Task Management</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Event</label>
+                    <select id="cboEvents" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select Event</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Task ID</label>
+                    <input type="text" id="txtTaskID" readonly class="w-full border rounded-lg px-3 py-2 bg-gray-100">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Item</label>
+                    <input type="text" id="txtItem" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Assignee</label>
+                    <select id="cboAssignees" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select Assignee</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                    <input type="date" id="txtDueDate" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="cboStatus" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select Status</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+                <textarea id="txtNotes" rows="3" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            </div>
+            <div class="flex items-center mb-4">
+                <input type="checkbox" id="chkComplete" class="form-checkbox h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500">
+                <label for="chkComplete" class="ml-2 text-sm font-medium text-gray-700">Completed</label>
+            </div>
+            <div class="flex gap-2">
+                <button id="btnSave" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-save mr-2"></i> Save Task
+                </button>
+                <button id="btnNew" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-plus mr-2"></i> New Task
+                </button>
+            </div>
+        </div>
+
+        <!-- Tasks List -->
+        <div class="mt-8 bg-white rounded-lg shadow overflow-hidden">
+            <div class="section-header bg-indigo-700 text-white px-6 py-4">
+                <h2 class="text-xl font-bold">Tasks</h2>
+            </div>
+            <div class="p-4">
+                <div class="grid grid-cols-6 gap-2 font-medium border-b pb-2 mb-2">
+                    <div>ID</div>
+                    <div>Item</div>
+                    <div>Due Date</div>
+                    <div>Status</div>
+                    <div>Assignee</div>
+                    <div>Done</div>
+                </div>
+                <div id="lstTasks" class="divide-y"></div>
+            </div>
+        </div>
+
+        <!-- Add New Item -->
+        <div class="mt-8 bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4 text-indigo-700">Add New Checklist Item</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Section</label>
+                    <select id="new-item-section" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="1">Pre-Event Planning</option>
+                        <option value="2">Site Cleaning & Venue Setup</option>
+                        <option value="3">Table Setup & Decoration</option>
+                        <option value="4">Catering & Food Service</option>
+                        <option value="5">Event Execution & Management</option>
+                        <option value="6">Post-Event Cleanup</option>
+                        <option value="7">Backup Plans & Emergency Prep</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
+                    <input type="text" id="new-item-name" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Item name">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <input type="text" id="new-item-desc" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Description">
+                </div>
+                <div class="flex items-end">
+                    <button id="add-item-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition w-full">
+                        <i class="fas fa-plus mr-2"></i> Add Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
